@@ -1,25 +1,32 @@
 <template>
     <section class="cart-item">
         <div class="cart-item-left">
-            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1825215635,1500412764&fm=11&gp=0.jpg" alt="">
+            <img :src="data.img" alt="">
             <div class="info">
-                <h4>Iphone 12 Pro</h4>
-                <p>￥9999</p>
+                <h4>{{ data.title }}</h4>
+                <p>{{ data.price }}</p>
                 <button class="delete-btn">移除</button>
             </div>
         </div>
         <div class="cart-item-right">
             <Icon name="add" class="add"/>
-            <span class="amount">1</span>
+            <span class="amount">{{ data.amount }}</span>
             <Icon name="subtract" class="subtract"/>
         </div>
     </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import Icon from '../../components/Icon.vue'
+import { ICartItem } from './Cart.vue'
 export default defineComponent({
+    props: {
+        data: {
+            type: Object as PropType<ICartItem>,
+            required: true,
+        }
+    },
     components: {
         Icon
     },

@@ -1,16 +1,13 @@
 <template>
-    <Icon name="add"/>
-    <Icon name="cart"/>
-    <Icon name="subtract"/>
-    <Icon name="delete"/>
+    <ShopCart/>
 </template>
 
 <script>
-import Icon from './components/Icon.vue'
+import ShopCart from './views/Cart/index.vue'
 export default {
   name: 'App',
   components: {
-    Icon,
+    ShopCart,
   }
 }
 </script>

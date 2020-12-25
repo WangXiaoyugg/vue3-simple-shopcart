@@ -4,7 +4,7 @@
             <h1>{{ title }}</h1>
             <div class="cart-header-wrap-total">
                 <Icon name="cart" class="cart"></Icon>
-                <span class="total">4</span>
+                <span class="total">{{ totalAmount }}</span>
             </div>
         </section>
         
@@ -12,8 +12,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Icon from '../../components/Icon.vue'
+import { eventBus } from '../../utils/eventBus'
 
 export default defineComponent({
     props: {
@@ -26,9 +27,14 @@ export default defineComponent({
         Icon,
     },
     setup () {
-        
+        const totalAmount = ref(null);
+        eventBus.on('get-total-amount', (total) => {
+            totalAmount.value = total.value
+        })
 
-        return {}
+        return {
+            totalAmount
+        }
     }
 })
 </script>

@@ -18,9 +18,10 @@
 </template>
 
 <script lang="ts">
-import { mockData } from '../../mock/index.js'
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, onUpdated } from 'vue'
 import CartItem from './CartItem.vue'
+import { mockData } from '../../mock/index.js'
+import { eventBus } from '../../utils/eventBus'
 
 export interface ICartItem {
     id: number;
@@ -37,12 +38,18 @@ export default defineComponent({
     components: {
         CartItem,
     },
-    setup () {
+    setup (props, context) {
         const cartList = ref([] as ICartItem[])
         const totalPrice = computed(() => {
             return cartList.value.reduce((acc, cur) => acc+ cur.price * cur.amount, 0)
         })
+        const totalAmount = computed(() => cartList.value.reduce((acc, cur) => acc + cur.amount, 0))
+
         cartList.value = mockData;
+        eventBus.emit('get-total-amount', totalAmount)
+        onUpdated(() => {
+            eventBus.emit('get-total-amount', totalAmount)
+        })
         
         const onAdd = (id: number):void => {
            const current = cartList.value.find(item => item.id === id)

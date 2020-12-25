@@ -41,7 +41,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .cart-item {
     margin: 0 auto;
-    width: 600px;
+    width: 100%;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -77,6 +77,7 @@ export default defineComponent({
         border: 1px solid #ccc;
          .add, .subtract  {
             font-size: 24px;
+            cursor: pointer;
         }
         > .amount {
             display: inline-flex;

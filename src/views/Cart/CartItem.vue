@@ -96,7 +96,8 @@ export default defineComponent({
             display: inline-flex;
             justify-content: center;
             font-size: 24px;
-            width: 24px;
+            min-width: 24px;
+            padding: 0 2px;
             border-left: 1px solid #ccc;
             border-right: 1px solid #ccc;
 

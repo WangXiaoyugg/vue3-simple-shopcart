@@ -1,6 +1,22 @@
 # Vue3 购物车
 Vue3 + typescript + scss , 开发最简单的购物车 
 
+## 使用说明
+1. 运行
+```git
+git clone <repo-name>
+cd <repo-name>
+npm install
+```
+2. 启动
+```
+npm run dev
+```
+2. 打包
+```
+npm run build
+```
+
 ## 购物车已实现的功能
 1. 商品数量增加
 2. 商品数量减少

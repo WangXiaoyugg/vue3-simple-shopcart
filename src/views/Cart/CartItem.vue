@@ -5,13 +5,13 @@
             <div class="info">
                 <h4>{{ data.title }}</h4>
                 <p>{{ data.price }}</p>
-                <button class="delete-btn">移除</button>
+                <button class="delete-btn" @click="deleteItem">移除</button>
             </div>
         </div>
         <div class="cart-item-right">
-            <Icon name="add" class="add"/>
+            <Icon name="add" class="add" @click="add"/>
             <span class="amount">{{ data.amount }}</span>
-            <Icon name="subtract" class="subtract"/>
+            <Icon name="subtract" class="subtract" @click="subtract"/>
         </div>
     </section>
 </template>
@@ -30,10 +30,22 @@ export default defineComponent({
     components: {
         Icon
     },
-    setup () {
-        
-
-        return {}
+    setup(props, context) {
+        const { id } = props.data
+        const add = () => {
+            context.emit('add', id)
+        }
+        const subtract = () => {
+            context.emit('subtract', id)
+        }
+        const deleteItem = () => {
+            context.emit('delete', id)
+        }
+        return {
+            add,
+            subtract,
+            deleteItem,
+        }
     }
 })
 </script>
@@ -68,6 +80,7 @@ export default defineComponent({
                 font-weight: bold;
                 font-size: 16px;
                 border: none;
+                cursor: pointer;
                 background: transparent;
             }
 

@@ -1,18 +1,25 @@
 <template>
     <main class="cart">
-        <CartItem v-for="(item) in cartList" :key="item.id" :data="item"></CartItem>
+        <CartItem 
+            v-for="(item) in cartList" 
+            :key="item.id" 
+            :data="item"
+            @add="onAdd"
+            @subtract="onSubtract"
+            @delete="onDelete"
+        ></CartItem>
         <div class="horizontal-line mt-20"></div>
         <div class="total-price">
             <span class="label">总价</span>
-            <span class="price">￥999999</span>
+            <span class="price">￥{{ totalPrice }}</span>
         </div>
-        <button class="clear-btn">清空购物车</button>
+        <button class="clear-btn" @click="onClear">清空购物车</button>
     </main>
 </template>
 
 <script lang="ts">
 import { mockData } from '../../mock/index.js'
-import { defineComponent, ref, Ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import CartItem from './CartItem.vue'
 
 export interface ICartItem {
@@ -32,12 +39,33 @@ export default defineComponent({
     },
     setup () {
         const cartList = ref([] as ICartItem[])
-        // setTimeout(() => {
-            cartList.value = mockData;
-        // }, 2000);
+        const totalPrice = computed(() => {
+            return cartList.value.reduce((acc, cur) => acc+ cur.price * cur.amount, 0)
+        })
+        cartList.value = mockData;
+        
+        const onAdd = (id: number):void => {
+           const current = cartList.value.find(item => item.id === id)
+           current && current.amount++
+        }
+        const onSubtract = (id: number):void => {
+            const current = cartList.value.find(item => item.id === id)
+            current && current.amount > 1 && current.amount--
+        }
+        const onDelete = (id: number):void => {
+            cartList.value = cartList.value.filter(item => item.id !== id)
+        }
+        const onClear = ():void => {
+            cartList.value = []
+        }
 
         return {
             cartList,
+            totalPrice,
+            onAdd,
+            onSubtract,
+            onDelete,
+            onClear,
         }
     }
 })
